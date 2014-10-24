@@ -11,22 +11,27 @@ include('header.php'); ?>
 			<div class="row-fluid">
 				<div class="well span5 center login-box">
 					<div class="alert alert-info">
-						请输入你的用户号和密码
+						<?php
+							if($error!=null){
+								echo $error;
+							}else{
+								echo "请输入你的用户名和密码";
+							}
+						?>
 					</div>
-					<form class="form-horizontal" action="index.html" method="post">
+					<form class="form-horizontal" action="login" method="post">
 						<fieldset>
 							<div class="input-prepend" title="Username" data-rel="tooltip">
-								<span class="add-on"><i class="icon-user"></i></span><input autofocus class="input-large span10" name="username" id="username" type="text" value="admin" />
+								<span class="add-on"><i class="icon-user"></i></span><input autofocus class="input-large span10" name="username" id="username" type="text"  />
 							</div>
 							<div class="clearfix"></div>
 
 							<div class="input-prepend" title="Password" data-rel="tooltip">
-								<span class="add-on"><i class="icon-lock"></i></span><input class="input-large span10" name="password" id="password" type="password" value="admin123456" />
+								<span class="add-on"><i class="icon-lock"></i></span><input class="input-large span10" name="password" id="password" type="password"  />
 							</div>
 							<div class="clearfix"></div>
 
 							<div class="input-prepend">
-							<label class="remember" for="remember"><input type="checkbox" id="remember" />Remember me</label>
 							</div>
 							<div class="clearfix"></div>
 

@@ -11,23 +11,34 @@
 |
 */
 
+Route::pattern('id', '[0-9]+');
+
 Route::get('/', function()
 {
-	return View::make('login');
+	return View::make('login')->with('error',null);
+});
+Route::post('login','UserController@login');
+
+Route::group(array('before' => 'auth'), function()
+{
+    Route::get('index','WorkerController@index');
+
+	Route::post('index','WorkerController@getSunday');
+
+	Route::get('changePassword',function(){
+		return View::make('changePassword')->with('error',null);
+	});
+	Route::post('changePassword','UserController@changePassword');
+
+	Route::get('logout',function(){
+		Auth::logout();
+		return Redirect::to('/');
+	});
+
+	Route::get('{view}/{action}/{id1?}/{id2?}','WorkerController@workerget');
+	Route::post('{view}/{action}','WorkerController@workerpost');
 });
 
-Route::get('train','ArrangeController@train');
 
-//Center
-Route::get('centerList','CenterController@tolist');
-Route::get('center/delete/{id}', 'CenterController@delete')->where('id', '[0-9]+');
-Route::get('centerAdd','CenterController@preAdd');
-Route::post('centerList','CenterController@add');
 
-//Company
-Route::get('companyList','CompanyController@tolist');
-Route::get('company/delete/{id}', 'CompanyController@delete')->where('id', '[0-9]+');
-Route::get('companyAdd',function(){
-	return View::make('companyAdd');
-});
-Route::post('companyList','CompanyController@add');
+
