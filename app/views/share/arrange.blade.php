@@ -16,7 +16,7 @@
 				<td>{{$share->time}}</td>
 				<td>{{$share->content}}</td>
 				<td>
-					<a href="share/add/{{$share->id}}">修改</a>
+					<a href="add/{{$share->id}}">修改</a>
 				</td>
 			</tr>
 			@endforeach

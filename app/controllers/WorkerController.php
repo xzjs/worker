@@ -356,21 +356,28 @@ class WorkerController extends HomeController{
 				case 'share':
 					switch ($action) {
 						case 'add':
-							$share=new Share;
-							$roles=Auth::user()->roles;
-							$bool=true;
-							foreach ($roles as $role) {
-								if($role->id==5){
-									$bool=false;
+							$id=Input::get('share_id');
+							if($id==0){
+								$share=new Share;
+								$roles=Auth::user()->roles;
+								$bool=true;
+								foreach ($roles as $role) {
+									if($role->id==5){
+										$bool=false;
+									}
 								}
+								if($bool){
+									$share->center_id=Auth::user()->center->id;
+								}
+								$share->content=Input::get('sharecontent');
+								$share->user_id=Auth::id();
+								$share->time=date("Y-m-d", strtotime('next Sunday'));
+								$share->save();
+							}else{
+								$share=Share::find($id);
+								$share->content=Input::get('sharecontent');
+								$share->save();
 							}
-							if($bool){
-								$share->center_id=Auth::user()->center->id;
-							}
-							$share->content=Input::get('sharecontent');
-							$share->user_id=Auth::id();
-							$share->time=date("Y-m-d", strtotime('next Sunday'));
-							$share->save();
 							return Redirect::to('share/arrange');
 							break;
 						case 'arrange':
