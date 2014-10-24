@@ -5,7 +5,6 @@
 		<thead>
 			<th>时间</th>
 			<th>家事分享1</th>
-			<th>家事分享2</th>
 			<th></th>
 		</thead>
 		<tbody>
@@ -16,9 +15,8 @@
 			<tr>
 				<td>{{$share->time}}</td>
 				<td>{{$share->content}}</td>
-				<td>{{$share->content2}}</td>
 				<td>
-					<a href="share/add/"+{{$share->id}>修改</a>
+					<a href="share/add/{{$share->id}}">修改</a>
 				</td>
 			</tr>
 			@endforeach

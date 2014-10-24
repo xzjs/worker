@@ -141,7 +141,7 @@ class WorkerController extends HomeController{
 				case 'share':
 					switch ($action) {
 						case 'add':
-							return View::make('share.add');
+							return View::make('share.add')->with('id',$id1);
 							break;
 						case 'arrange':
 							return View::make('share.arrange')->with('sundays',$this->returnSunday(strtotime(date("Y-m"))));
@@ -357,11 +357,17 @@ class WorkerController extends HomeController{
 					switch ($action) {
 						case 'add':
 							$share=new Share;
-							if(Auth::user()->roles->id==5){
-								$share->content=Input::get('sharecontent');
-							}else{
-								$share->content2=Input::get('sharecontent');
+							$roles=Auth::user()->roles;
+							$bool=true;
+							foreach ($roles as $role) {
+								if($role->id==5){
+									$bool=false;
+								}
 							}
+							if($bool){
+								$share->center_id=Auth::user()->center->id;
+							}
+							$share->content=Input::get('sharecontent');
 							$share->user_id=Auth::id();
 							$share->time=date("Y-m-d", strtotime('next Sunday'));
 							$share->save();
