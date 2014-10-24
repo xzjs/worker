@@ -8,9 +8,12 @@
 	<table class="table table-striped table-bordered bootstrap-datatable">
 		<thead>
 			<tr>
-				<th>时间</th>
+				<th></th>
 				<?php
-					echo "<th>".Auth::user()->center->CenterName."</th>";
+					$centers=Center::all();
+					foreach ($centers as $Center) {
+						echo "<th>".$Center->CenterName."</th>";
+					}
 				?>
 			</tr>
 		</thead>
@@ -19,26 +22,26 @@
 			<tr>
 				<td>{{date("Y-m-d", $sunday)}}</td>
 				<?php
-					$center=Auth::user()->center;
-					
-					$activity=Activity::where('center_id','=',$center->id)->where('Date','=',date("Ymd", $sunday))->first();
-					if($activity!=null){
-						$chair=$activity->chair;
-						if($activity->center_id== Auth::user()->center_id){
-							echo "<td ondrop='drop(event)' ondragover='allowDrop(event)' id=".$chair->id." >";
-							if($chair->host_id!=null){
-								$user=User::find($chair->host_id);
-								echo "<button onclick=predel('".$chair->id."') id=".$chair->id.">".$user->Name."</button>";
-							}
-						}else{ 
+					$centers=Center::all();
+					foreach ($centers as $center) {
+						$activity=Activity::where('center_id','=',$center->id)->where('Date','=',date("Ymd", $sunday))->first();
+						if($activity!=null){
+							$chair=$activity->chair;
+							if($activity->center_id== Auth::user()->center_id){
+								echo "<td ondrop='drop(event)' ondragover='allowDrop(event)' style='background-color: rgb(0,255,255)' id=".$chair->id." >";
+								if($chair->host_id!=null){
+									$user=User::find($chair->host_id);
+									echo "<button onclick=predel('".$chair->id."') id=".$chair->id.">".$user->Name."</button>";
+								}
+							}else{ 
+								echo "<td>";
+								//echo $user->id."+".Auth::id();
+							}	
+						}else{
 							echo "<td>";
-							echo $user->id."+".Auth::id();
-						}	
-					}else{
-						echo '<td ondrop="drop(event)" ondragover="allowDrop(event)" id="'.date("Ymd", $sunday)."a".$center->id.'" >';
+						}
+						echo "</td>";
 					}
-					echo "</td>";
-					
 				?>
 			</tr>
 			@endforeach
