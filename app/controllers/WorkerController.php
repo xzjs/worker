@@ -176,9 +176,25 @@ class WorkerController extends HomeController{
 							return View::make('host.arrange')->with('sundays',$this->returnSunday(strtotime(date("Y-m"))));
 							break;
 						case 'addToChair':
-							$chair=Chair::find($id1);
-							$chair->host_id=$id2;
-							$chair->save();
+							$chair_id=explode('a',$id1);
+							if(count($chair_id)>1){
+								$activity=new Activity;
+					
+								$center_id=$chair_id[1];
+								$date=$chair_id[0];
+								$activity->center_id=$center_id;
+								$activity->Date=$date;
+								$activity->save();
+								$activity_id=$activity->id;
+								$chair=new Chair;
+								$chair->host_id=$id2;
+								$chair->activity_id=$activity_id;
+								$chair->save();
+							}else{
+								$chair=Chair::find($id1);
+								$chair->host_id=$id2;
+								$chair->save();
+							}
 							break;
 						case 'delToChair':
 							$chair=Chair::find($id1);
