@@ -4,7 +4,7 @@
 	<table class="table  table-striped table-bordered table-hover">
 		<thead>
 			<th>时间</th>
-			<th>家事分享1</th>
+			<th>家事分享</th>
 			<th></th>
 		</thead>
 		<tbody>

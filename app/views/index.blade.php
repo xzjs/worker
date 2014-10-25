@@ -31,8 +31,10 @@
 							echo "<td>";
 
 							$chair=$activity->chair;
-							$user=User::find($chair->teacher_id);
-							echo "<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#".$activity->id."'>".$user->Name."</button>";
+							if($chair->teacher_id!=null){
+								$user=User::find($chair->teacher_id);
+								echo "<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#".$activity->id."'>".$user->Name."</button>";
+							}
 						}else{
 							echo "<td>";
 						}
@@ -48,9 +50,11 @@ $activities=Activity::all();
 foreach ($activities as $activity) {
 	$chair=$activity->chair;
 	echo "<div class='modal fade' id='".$activity->id."' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'><div class='modal-body'>";
-	$teacher=User::find($chair->teacher_id);
-	echo "<h4>讲师</h4>";
-	echo "<p>".$teacher->Name."</p>";
+	if($chair->teacher_id!=null){
+		$teacher=User::find($chair->teacher_id);
+		echo "<h4>讲师</h4>";
+		echo "<p>".$teacher->Name."</p>";
+	}
 	if($chair->content_id!=null){
 		echo "<h4>证道内容</h4>";
 		echo "<p>".$chair->content->text."</p>";
